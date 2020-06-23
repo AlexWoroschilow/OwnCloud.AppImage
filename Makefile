@@ -34,6 +34,11 @@ all:
 	rpm2cpio build.rpm | cpio -idmv
 	rm -f build.rpm
 
+	wget --output-document=build.rpm --continue https://rpmfind.net/linux/mageia/distrib/7/x86_64/media/core/release/lib64qt5gui5-5.12.2-2.mga7.x86_64.rpm
+	rpm2cpio build.rpm | cpio -idmv
+	rm -f build.rpm
+
+
 	
 	rpm2cpio $(DESTINATION) | cpio -idmv
 	
