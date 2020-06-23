@@ -22,6 +22,18 @@ all:
 	rpm2cpio build.rpm | cpio -idmv
 	rm -f build.rpm
 
+	wget --output-document=build.rpm --continue http://mirror.centos.org/centos/8/AppStream/x86_64/os/Packages/qt5-qtbase-gui-5.12.5-4.el8.x86_64.rpm
+	rpm2cpio build.rpm | cpio -idmv
+	rm -f build.rpm
+
+	wget --output-document=build.rpm --continue http://mirror.centos.org/centos/8/AppStream/x86_64/os/Packages/qt5-qtbase-gui-5.12.5-4.el8.x86_64.rpm
+	rpm2cpio build.rpm | cpio -idmv
+	rm -f build.rpm
+
+	wget --output-document=build.rpm --continue http://mirror.centos.org/centos/8/BaseOS/x86_64/os/Packages/libpng-1.6.34-5.el8.x86_64.rpm
+	rpm2cpio build.rpm | cpio -idmv
+	rm -f build.rpm
+
 	
 	rpm2cpio $(DESTINATION) | cpio -idmv
 	
@@ -37,9 +49,9 @@ all:
 	export ARCH=x86_64 && bin/appimagetool.AppImage AppDir $(OUTPUT)
 	chmod +x $(OUTPUT)
 	
-	rm -rf *.rpm
-	rm -rf AppDir/application
-	rm -rf AppDir/lib
-	rm -rf usr
-	rm -rf opt
-	rm -rf etc
+	#rm -rf *.rpm
+	#rm -rf AppDir/application
+	#rm -rf AppDir/lib
+	#rm -rf usr
+	#rm -rf opt
+	#rm -rf etc
