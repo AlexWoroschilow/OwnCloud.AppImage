@@ -49,9 +49,9 @@ all:
 	export ARCH=x86_64 && bin/appimagetool.AppImage AppDir $(OUTPUT)
 	chmod +x $(OUTPUT)
 	
-	#rm -rf *.rpm
-	#rm -rf AppDir/application
-	#rm -rf AppDir/lib
-	#rm -rf usr
-	#rm -rf opt
-	#rm -rf etc
+	rm -rf *.rpm
+	rm -rf AppDir/application
+	rm -rf AppDir/lib
+	rm -rf usr
+	rm -rf opt
+	rm -rf etc
