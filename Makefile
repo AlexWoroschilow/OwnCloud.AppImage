@@ -38,6 +38,10 @@ all:
 	rpm2cpio build.rpm | cpio -idmv
 	rm -f build.rpm
 
+	wget --output-document=build.rpm --continue https://rpmfind.net/linux/mageia/distrib/7/x86_64/media/core/release/qtimageformats5-5.12.2-2.mga7.x86_64.rpm
+	rpm2cpio build.rpm | cpio -idmv
+	rm -f build.rpm
+
 
 	
 	rpm2cpio $(DESTINATION) | cpio -idmv
@@ -55,8 +59,8 @@ all:
 	chmod +x $(OUTPUT)
 	
 	rm -rf *.rpm
-	rm -rf AppDir/application
-	rm -rf AppDir/lib
+	#rm -rf AppDir/application
+	#rm -rf AppDir/lib
 	rm -rf usr
 	rm -rf opt
 	rm -rf etc
