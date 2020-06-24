@@ -59,8 +59,8 @@ all:
 	chmod +x $(OUTPUT)
 	
 	rm -rf *.rpm
-	#rm -rf AppDir/application
-	#rm -rf AppDir/lib
+	rm -rf AppDir/application
+	rm -rf AppDir/lib
 	rm -rf usr
 	rm -rf opt
 	rm -rf etc
