@@ -1,4 +1,4 @@
-SOURCE="https://download.opensuse.org/repositories/isv:/ownCloud:/desktop/CentOS_8/x86_64/owncloud-client-2.6.3-2668.3.x86_64.rpm"
+SOURCE="https://download.opensuse.org/repositories/isv:/ownCloud:/desktop/CentOS_8/x86_64/owncloud-client-2.6.3-2668.4.x86_64.rpm"
 DESTINATION="owncloud.rpm"
 OUTPUT="OwnCloud.AppImage"
 PWD=$(shell pwd)
@@ -50,6 +50,8 @@ all:
 	mkdir -p AppDir/lib
 	
 	cp -r opt/ownCloud/ownCloud/bin/* AppDir/application
+	cp -r etc/ownCloud/* AppDir/application
+
 	cp -r opt/ownCloud/ownCloud/lib64/* AppDir/lib
 	cp -r usr/lib64/* AppDir/lib
 
