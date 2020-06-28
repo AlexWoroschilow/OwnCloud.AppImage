@@ -46,6 +46,11 @@ all:
 	rpm2cpio build.rpm | cpio -idmv
 	rm -f build.rpm
 
+	wget --output-document=build.rpm --continue http://mirror.centos.org/centos/6/os/x86_64/Packages/libxcb-1.12-4.el6.x86_64.rpm
+	rpm2cpio build.rpm | cpio -idmv
+	rm -f build.rpm
+
+
 
 
 
