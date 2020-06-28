@@ -42,24 +42,30 @@ all:
 	rpm2cpio build.rpm | cpio -idmv
 	rm -f build.rpm
 
+	wget --output-document=build.rpm --continue https://download-ib01.fedoraproject.org/pub/epel/6/x86_64/Packages/p/pcre2-10.21-22.el6.x86_64.rpm
+	rpm2cpio build.rpm | cpio -idmv
+	rm -f build.rpm
 
-	
+
+
+
+
 	rpm2cpio $(DESTINATION) | cpio -idmv
-	
+
 	mkdir -p AppDir/application
 	mkdir -p AppDir/lib
-	
+
 	cp -r opt/ownCloud/ownCloud/bin/* AppDir/application
 	cp -r etc/ownCloud/* AppDir/application
 
 	cp -r opt/ownCloud/ownCloud/lib64/* AppDir/lib
 	cp -r usr/lib64/* AppDir/lib
 
-	
+
 	chmod +x AppDir/AppRun
 	export ARCH=x86_64 && bin/appimagetool.AppImage AppDir $(OUTPUT)
 	chmod +x $(OUTPUT)
-	
+
 	rm -rf *.rpm
 	rm -rf AppDir/application
 	rm -rf AppDir/lib
