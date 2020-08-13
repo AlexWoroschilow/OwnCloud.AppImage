@@ -1,4 +1,4 @@
-SOURCE="https://download.opensuse.org/repositories/isv:/ownCloud:/desktop/CentOS_8/x86_64/owncloud-client-2.6.3-2668.5.x86_64.rpm"
+SOURCE="https://download.opensuse.org/repositories/isv:/ownCloud:/desktop/CentOS_7.6/x86_64/owncloud-client-2.6.3-2668.1.x86_64.rpm"
 DESTINATION="owncloud.rpm"
 OUTPUT="OwnCloud.AppImage"
 PWD=$(shell pwd)
