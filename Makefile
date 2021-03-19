@@ -1,68 +1,34 @@
-SOURCE="https://download.opensuse.org/repositories/isv:/ownCloud:/desktop/CentOS_8/x86_64/owncloud-client-2.6.3-2668.4.x86_64.rpm"
-DESTINATION="owncloud.rpm"
-OUTPUT="OwnCloud.AppImage"
-PWD=$(shell pwd)
+# Copyright 2020 Alex Woroschilow (alex.woroschilow@gmail.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+PWD := $(shell pwd)
 
-all:
-	echo "Building: $(OUTPUT)"
-	wget --output-document=$(DESTINATION) --continue $(SOURCE)
-	wget --output-document=build.rpm --continue  https://ftp.lysator.liu.se/pub/opensuse/distribution/leap/15.1/repo/oss/x86_64/libqt5keychain1-0.9.1-lp151.1.1.x86_64.rpm
-	rpm2cpio build.rpm | cpio -idmv
-	rm -f build.rpm
+all: clean
+	mkdir -p $(PWD)/build/Boilerplate.AppDir
 
-	wget --output-document=build.rpm --continue http://mirror.centos.org/centos/8/AppStream/x86_64/os/Packages/qt5-qtbase-5.12.5-4.el8.x86_64.rpm
-	rpm2cpio build.rpm | cpio -idmv
-	rm -f build.rpm
+	apprepo --destination=$(PWD)/build appdir boilerplate owncloud-client owncloud-client-cmd owncloud-client-data \
+													owncloud-client-doc owncloud-client-l10n
 
-	wget --output-document=build.rpm --continue https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/o/openssl11-libs-1.1.1c-2.el7.x86_64.rpm
-	rpm2cpio build.rpm | cpio -idmv
-	rm -f build.rpm
-
-	wget --output-document=build.rpm --continue http://mirror.centos.org/centos/8/BaseOS/x86_64/os/Packages/libicu-60.3-2.el8_1.x86_64.rpm
-	rpm2cpio build.rpm | cpio -idmv
-	rm -f build.rpm
-
-	wget --output-document=build.rpm --continue http://mirror.centos.org/centos/8/AppStream/x86_64/os/Packages/qt5-qtbase-gui-5.12.5-4.el8.x86_64.rpm
-	rpm2cpio build.rpm | cpio -idmv
-	rm -f build.rpm
-
-	wget --output-document=build.rpm --continue http://mirror.centos.org/centos/8/AppStream/x86_64/os/Packages/qt5-qtbase-gui-5.12.5-4.el8.x86_64.rpm
-	rpm2cpio build.rpm | cpio -idmv
-	rm -f build.rpm
-
-	wget --output-document=build.rpm --continue http://mirror.centos.org/centos/8/BaseOS/x86_64/os/Packages/libpng-1.6.34-5.el8.x86_64.rpm
-	rpm2cpio build.rpm | cpio -idmv
-	rm -f build.rpm
-
-	wget --output-document=build.rpm --continue https://rpmfind.net/linux/mageia/distrib/7/x86_64/media/core/release/lib64qt5gui5-5.12.2-2.mga7.x86_64.rpm
-	rpm2cpio build.rpm | cpio -idmv
-	rm -f build.rpm
-
-	wget --output-document=build.rpm --continue https://rpmfind.net/linux/mageia/distrib/7/x86_64/media/core/release/qtimageformats5-5.12.2-2.mga7.x86_64.rpm
-	rpm2cpio build.rpm | cpio -idmv
-	rm -f build.rpm
+	echo 'exec $${APPDIR}/bin/owncloud $${@}' >> $(PWD)/build/Boilerplate.AppDir/AppRun
 
 
-	
-	rpm2cpio $(DESTINATION) | cpio -idmv
-	
-	mkdir -p AppDir/application
-	mkdir -p AppDir/lib
-	
-	cp -r opt/ownCloud/ownCloud/bin/* AppDir/application
-	cp -r etc/ownCloud/* AppDir/application
+	rm -f $(PWD)/build/Boilerplate.AppDir/*.png 		| true
+	rm -f $(PWD)/build/Boilerplate.AppDir/*.desktop 	| true
+	rm -f $(PWD)/build/Boilerplate.AppDir/*.svg 		| true	
 
-	cp -r opt/ownCloud/ownCloud/lib64/* AppDir/lib
-	cp -r usr/lib64/* AppDir/lib
+	cp --force $(PWD)/AppDir/*.svg 		$(PWD)/build/Boilerplate.AppDir 			| true	
+	cp --force $(PWD)/AppDir/*.desktop 	$(PWD)/build/Boilerplate.AppDir 			| true	
+	cp --force $(PWD)/AppDir/*.png 		$(PWD)/build/Boilerplate.AppDir 			| true	
 
-	
-	chmod +x AppDir/AppRun
-	export ARCH=x86_64 && bin/appimagetool.AppImage AppDir $(OUTPUT)
-	chmod +x $(OUTPUT)
-	
-	rm -rf *.rpm
-	rm -rf AppDir/application
-	rm -rf AppDir/lib
-	rm -rf usr
-	rm -rf opt
-	rm -rf etc
+	export ARCH=x86_64 && bin/appimagetool.AppImage  $(PWD)/build/Boilerplate.AppDir $(PWD)/OwnCloud.AppImage
+	chmod +x $(PWD)/OwnCloud.AppImage
+
+clean: $(shell rm -rf $(PWD)/build)
